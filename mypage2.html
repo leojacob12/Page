@@ -8,11 +8,11 @@
     <style>
         @font-face {
             font-family: 'PrimusScript';
-            src: url('./content/primusscript.ttf') format('truetype');
+            src: url('./assets/fonts/primusscript.ttf') format('truetype');
         }
         
         body {
-            background-image: url('./content/windi.gif');
+            background-image: url('./assets/55K5OUB.png'); /* Ersetze mit dem relativen Pfad zu deinem Hintergrundbild */
             background-size: cover;
             background-position: center;
             margin: 0;
@@ -20,46 +20,35 @@
             font-family: 'Courier New', Courier, monospace;
             color: #00FF00;
             text-align: center;
-            overflow: hidden; /* Verhindert, dass der Bildlauf angezeigt wird */
         }
         h1 {
-            font-family: 'PrimusScript', cursive;
+            font-family: 'PrimusScript', cursive; /* Verwende die neue Schriftart */
             text-shadow: 2px 2px 0px #000000;
         }
         h2 {
-            font-family: 'PrimusScript', cursive;
+            font-family: 'PrimusScript', cursive; /* Verwende die neue Schriftart */
             text-shadow: 2px 2px 0px #000000;
         }
-        .animation-container {
-            position: relative;
-            width: 100vw; /* Volle Breite des Viewports */
-            height: 100vh; /* Volle Höhe des Viewports */
-            overflow: hidden; /* Verhindert, dass das Bild aus dem Container herausragt */
+        .content-frame {
+            width: 80%;
+            height: 60vh;
+            margin: 20px auto;
+            border: 5px solid #FFD700;
+            background-image: url('./content/windi.gif'); /* Ersetze mit dem relativen Pfad zu deinem zweiten Hintergrundbild oder GIF */
+            background-size: cover;
+            background-position: center;
         }
-        .animation-image {
-            position: absolute;
-            bottom: 0; /* Startposition unten */
-            right: 0; /* Startposition rechts */
-            width: 50px; /* Breite des Bildes */
-            height: auto; /* Höhe automatisch berechnen */
-            transition: transform 5s; /* Animationsübergang für die Transformation */
-            transform-origin: bottom right; /* Ursprung der Transformation */
-            z-index: -1; /* Stellt sicher, dass das Bild hinter dem 3D-Modell liegt */
-        }
-
         model-viewer {
-            width: 100%; /* 100% der Breite des übergeordneten Elements */
-            height: 80vh; /* 80% der Viewport-Höhe */
+            width: 100%; /* 100% of the parent's width */
+            height: 80vh; /* 80% of the viewport height */
             display: block;
             margin: auto;
-            position: relative; /* Position relativ setzen */
-            z-index: 1; /* Z-Index setzen */
         }
     </style>
 </head>
 <body>
-    <h1>SEITEN AUS ANDEREN ZEITEN</h1>
-    <h2>1989-2024</h2>
+    <h1>SEITEN IN ANDEREN ZEITEN</h1>
+    <h2>1984 - 2024</h2>
     <div class="content-frame"></div>
     <model-viewer 
         id="model-viewer"
@@ -74,9 +63,6 @@
         animation-name="CubeAction" 
         animation-loop>
     </model-viewer>
-    <div class="animation-container">
-        <img class="animation-image" src="./content/mausi.webp" alt="WebP Image">
-    </div>
     <script>
         async function checkARCoreCompatibility() {
             const modelViewer = document.getElementById('model-viewer');
@@ -88,14 +74,7 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            checkARCoreCompatibility();
-            const img = document.querySelector('.animation-image');
-            img.style.transform = 'translateY(0)'; // Startposition der Transformation
-            setTimeout(() => {
-                img.style.transform = 'translateY(calc(100vh - 50px))'; // Endposition der Transformation
-            }, 100); // Timeout, um die Animation zu starten (kann angepasst werden)
-        });
+        document.addEventListener('DOMContentLoaded', checkARCoreCompatibility);
     </script>
 </body>
 </html>
