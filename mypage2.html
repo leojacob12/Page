@@ -38,22 +38,33 @@
         }
         .animation-image {
             position: absolute;
-            bottom: -100px; /* Startposition außerhalb des Bildschirms */
-            right: -100px; /* Startposition außerhalb des Bildschirms */
-            transition: bottom 2s, right 2s; /* Animationsübergang für bottom und right */
+            top: 0; /* Startposition oben */
+            left: 0; /* Startposition links */
+            width: 50px; /* Breite des Bildes */
+            height: auto; /* Höhe automatisch berechnen */
+            transition: top 5s, left 5s; /* Animationsübergang für top und left */
         }
         @keyframes flyIn {
             from {
-                bottom: -100px;
-                right: -100px;
+                top: 0; /* Startposition oben */
+                left: 0; /* Startposition links */
             }
             to {
-                bottom: 20px; /* Zielposition */
-                right: 20px; /* Zielposition */
+                top: calc(100vh - 50px); /* Endposition unten (Viewport-Höhe minus Bildhöhe) */
+                left: calc(100vw - 50px); /* Endposition rechts (Viewport-Breite minus Bildbreite) */
             }
         }
         .animation-image.fly {
-            animation: flyIn 2s forwards; /* Starte die Animation */
+            animation: flyIn 5s forwards; /* Starte die Animation */
+        }
+
+        model-viewer {
+            width: 100%; /* 100% der Breite des übergeordneten Elements */
+            height: 80vh; /* 80% der Viewport-Höhe */
+            display: block;
+            margin: auto;
+            position: relative; /* Position relativ setzen */
+            z-index: 1; /* Z-Index setzen */
         }
     </style>
 </head>
@@ -75,7 +86,7 @@
         animation-loop>
     </model-viewer>
     <div class="animation-container">
-        <img class="animation-image fly" src="./content/mausi.webp" alt="WebP Image">
+        <img class="animation-image fly" src="./content/your_webp_image.webp" alt="WebP Image">
     </div>
     <script>
         async function checkARCoreCompatibility() {
