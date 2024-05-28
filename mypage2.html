@@ -66,6 +66,24 @@
             position: relative; /* Position relativ setzen */
             z-index: 1; /* Z-Index setzen */
         }
+        .webp-trail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Verhindert, dass das Element Klicks abfängt */
+            z-index: 0; /* Stellt sicher, dass die Spur hinter dem 3D-Modell liegt */
+        }
+        .webp-image {
+            width: 50px;
+            height: auto;
+            position: absolute;
+            transition: opacity 1s ease-in-out; /* Animationsübergang für Opazität */
+        }
+        .webp-image.hidden {
+            opacity: 0; /* Versteckt das Bild */
+        }
     </style>
 </head>
 <body>
@@ -86,7 +104,9 @@
         animation-loop>
     </model-viewer>
     <div class="animation-container">
-        <img class="animation-image fly" src="./content/mausi.webp" alt="WebP Image">
+        <div class="webp-trail">
+            <img class="webp-image" src="./content/your_webp_image.webp" alt="WebP Image">
+        </div>
     </div>
     <script>
         async function checkARCoreCompatibility() {
@@ -101,8 +121,15 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             checkARCoreCompatibility();
-            const img = document.querySelector('.animation-image');
-            img.classList.add('fly');
+            const webpImage = document.querySelector('.webp-image');
+            // Füge die Klasse "hidden" hinzu, um das Bild zu verstecken
+            webpImage.classList.add('hidden');
+            // Starte die Animation, indem du die Klasse "fly" hinzufügst
+            webpImage.classList.add('fly');
+            // Entferne die Klasse "hidden", um das Bild sichtbar zu machen, nachdem die Animation abgeschlossen ist
+            setTimeout(() => {
+                webpImage.classList.remove('hidden');
+            }, 5000); // Setze den Timeout auf die gleiche Dauer wie die Animation
         });
     </script>
 </body>
