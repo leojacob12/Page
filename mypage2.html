@@ -1,123 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kunsthalle AR Show!</title>
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-     <style>
+    <style>
+        body {
+            background-image: url('./content/cloudy.png'); /* Ersetze mit dem relativen Pfad zu deinem Hintergrundbild */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            color: #00FF00;
+            text-align: center;
+        }
+        h1, h2 {
+            text-shadow: 2px 2px 0px #000000;
+        }
         model-viewer {
             width: 100%; /* 100% of the parent's width */
             height: 80vh; /* 80% of the viewport height */
             display: block;
             margin: auto;
         }
-     <style>
-          body {
-            background-image: ./content/cloudy.png; /* Ersetze mit der URL deines Hintergrundbildes */
-            background-size: cover;
-            font-family: 'Courier New', Courier, monospace;
-            color: #00FF00;
-            text-align: center;
-            cursor: ./content/isolated-computer-classic-mouse-control-finger-cursor-pointer-8-bits-pixel-icon-png.webp, auto; /* Ersetze mit der URL deines Cursors */
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        h1 {
-            text-shadow: 2px 2px 0px #000000;
-        }
-        .button {
-            background-color: #ff00ff;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            padding: 20px;
-            background-color: #000080;
-            border: 2px solid #FFD700;
-            color: white;
-            z-index: 1000;
-            display: none;
-            box-shadow: 5px 5px 15px #000000;
-            text-align: center;
-        }
-        .popup h2 {
-            margin: 0;
-        }
-        .popup button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #ff00ff;
-            border: none;
-            color: white;
-            cursor: pointer;
-        }
     </style>
-    <script>
-        function showPopup() {
-            document.getElementById('popup').style.display = 'block';
-        }
-        function closePopup() {
-            document.getElementById('popup').style.display = 'none';
-        }
-        window.onload = showPopup;
-    </script>
 </head>
 <body>
-    <h1>Willkommen in den 80er/90er Jahren!</h1>
-    <p>Dies ist eine Webseite im Retro-Stil.</p>
-    <button class="button" onclick="showPopup()">Klicke mich!</button>
-
-    <div id="popup" class="popup">
-        <h2>Retro-Popup</h2>
-        <p>Willkommen auf unserer Retro-Webseite!</p>
-        <button onclick="closePopup()">Schließen</button>
-    </div>
-</body>
-    </style>
+    <h1>MyPage</h1>
+    <h2>HobbyHorse</h2>
+    <model-viewer 
+        id="model-viewer"
+        src="./content/ar2.glb"
+        ios-src=""
+        alt="Kunsthalle AR Show"
+        ar
+        ar-modes="webxr scene-viewer quick-look" 
+        environment-image="neutral" 
+        auto-rotate
+        camera-controls
+        animation-name="CubeAction" 
+        animation-loop>
+    </model-viewer>
     <script>
-        function showPopup() {
-            alert("Willkommen auf unserer Retro-Webseite!");
-        }
-        window.onload = showPopup;
-    </script>
-</head>
-<body>
-    <h1>Willkommen in den 80er/90er Jahren!</h1>
-    <p>Dies ist eine Webseite im Retro-Stil.</p>
-    <button class="button" onclick="showPopup()">Klicke mich!</button>
-</body>
-  
-</style>
-    <H1>MyPage</H1>
-<H2>HobbyHorse</H2>
-  <model-viewer 
-                id="model-viewer"
-                src="./content/ar2.glb"
-                ios-src="
-                alt="Kunsthalle AR Show"
-                ar
-                ar-modes="webxr scene-viewer quick-look" 
-                environment-image="neutral" 
-                auto-rotate
-                camera-controls
-                animation-name="CubeAction" 
-                animation-loop>  
-  </model-viewer>
- <script>
         async function checkARCoreCompatibility() {
             const modelViewer = document.getElementById('model-viewer');
             const isARCoreSupported = await navigator.xr.isSessionSupported('immersive-ar');
@@ -130,5 +56,5 @@
 
         document.addEventListener('DOMContentLoaded', checkARCoreCompatibility);
     </script>
-   </body>
+</body>
 </html>
