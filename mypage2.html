@@ -8,11 +8,11 @@
     <style>
         @font-face {
             font-family: 'PrimusScript';
-            src: url('./assets/fonts/primusscript.ttf') format('truetype');
+            src: url('./content/primusscript.ttf') format('truetype');
         }
         
         body {
-            background-image: url('./assets/55K5OUB.png'); /* Ersetze mit dem relativen Pfad zu deinem Hintergrundbild */
+            background-image: url('./content/55K5OUB.png'); /* Ersetze mit dem relativen Pfad zu deinem Hintergrundbild */
             background-size: cover;
             background-position: center;
             margin: 0;
@@ -37,6 +37,8 @@
             background-image: url('./content/windi.gif'); /* Ersetze mit dem relativen Pfad zu deinem zweiten Hintergrundbild oder GIF */
             background-size: cover;
             background-position: center;
+            position: relative; /* Position relativ setzen, um den Rahmen zu überlagern */
+            z-index: -1; /* Negative z-Index, um den Rahmen hinter das 3D-Modell zu bringen */
         }
         model-viewer {
             width: 100%; /* 100% of the parent's width */
