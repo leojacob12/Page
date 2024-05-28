@@ -20,6 +20,7 @@
             font-family: 'Courier New', Courier, monospace;
             color: #00FF00;
             text-align: center;
+            position: relative; /* Position relativ setzen, um den Rahmen zu überlagern */
         }
         h1 {
             font-family: 'PrimusScript', cursive;
@@ -33,16 +34,16 @@
             width: 80%;
             height: 60vh;
             margin: 20px auto;
-            border: 5px solid #00FF00;
+            border: 5px solid #00FF000;
             background-image: url('./content/windi.gif');
             background-size: cover;
             background-position: center;
-            position: relative; /* Position relativ setzen, um den Rahmen zu überlagern */
+            position: absolute; /* Position absolut setzen */
             z-index: -1; /* Negative z-Index, um den Rahmen hinter das 3D-Modell zu bringen */
         }
         model-viewer {
             width: 100%;
-            height: 80vh;
+            height: calc(80vh - 20px); /* Abstand zum oberen Rand des Rahmens hinzufügen */
             display: block;
             margin: auto;
             position: relative; /* Position relativ setzen */
