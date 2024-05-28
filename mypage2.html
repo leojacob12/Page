@@ -12,7 +12,7 @@
         }
         
         body {
-            background-image: url('./content/55K5OUB.png'); /* Ersetze mit dem relativen Pfad zu deinem Hintergrundbild */
+            background-image: url('./content/55K5OUB.png');
             background-size: cover;
             background-position: center;
             margin: 0;
@@ -22,29 +22,31 @@
             text-align: center;
         }
         h1 {
-            font-family: 'PrimusScript', cursive; /* Verwende die neue Schriftart */
+            font-family: 'PrimusScript', cursive;
             text-shadow: 2px 2px 0px #000000;
         }
         h2 {
-            font-family: 'PrimusScript', cursive; /* Verwende die neue Schriftart */
+            font-family: 'PrimusScript', cursive;
             text-shadow: 2px 2px 0px #000000;
         }
         .content-frame {
             width: 80%;
             height: 60vh;
             margin: 20px auto;
-            border: 5px solid #FFD700;
-            background-image: url('./content/windi.gif'); /* Ersetze mit dem relativen Pfad zu deinem zweiten Hintergrundbild oder GIF */
+            border: 5px solid #00FF000;
+            background-image: url('./content/windi.gif');
             background-size: cover;
             background-position: center;
             position: relative; /* Position relativ setzen, um den Rahmen zu überlagern */
             z-index: -1; /* Negative z-Index, um den Rahmen hinter das 3D-Modell zu bringen */
         }
         model-viewer {
-            width: 100%; /* 100% of the parent's width */
-            height: 80vh; /* 80% of the viewport height */
+            width: 100%;
+            height: 80vh;
             display: block;
             margin: auto;
+            position: relative; /* Position relativ setzen */
+            z-index: 1; /* Z-Index setzen, um das 3D-Modell über dem Rahmen zu positionieren */
         }
     </style>
 </head>
