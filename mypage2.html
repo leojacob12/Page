@@ -12,14 +12,44 @@
             display: block;
             margin: auto;
         }
+     <style>
+        body {
+            background-image: url('https://USERNAME.github.io/REPO_NAME/assets/background.jpg'); /* Ersetze mit der URL deines Hintergrundbildes */
+            background-size: cover;
+            font-family: 'Courier New', Courier, monospace;
+            color: #00FF00;
+            text-align: center;
+            cursor: url('https://USERNAME.github.io/REPO_NAME/assets/cursor.cur'), auto; /* Ersetze mit der URL deines Cursors */
+        }
+        h1 {
+            text-shadow: 2px 2px 0px #000000;
+        }
+        .button {
+            background-color: #ff00ff;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function showPopup() {
+            alert("Willkommen auf unserer Retro-Webseite!");
+        }
+        window.onload = showPopup;
+    </script>
+</head>
+<body>
+    <h1>Willkommen in den 80er/90er Jahren!</h1>
+    <p>Dies ist eine Webseite im Retro-Stil.</p>
+    <button class="button" onclick="showPopup()">Klicke mich!</button>
+</body>
   
-  </head>
-  <body>
-        /* Linearer Verlauf von Gelb zu Rot */
-    background: linear-gradient(to right, yellow, red);
-    height: 100vh; /* Gesamte Höhe des Viewports */
-    margin: 0; /* Entfernt Standardabstand */
-  }
 </style>
     <H1>MyPage</H1>
 <H2>HobbyHorse</H2>
