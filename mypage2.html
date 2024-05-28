@@ -37,9 +37,11 @@
             height: 60vh;
             margin: 20px auto;
             border: 5px solid #FFD700;
-            background-image: ./content/cloudy3.jpg; /* Ersetze mit dem relativen Pfad zu deinem zweiten Hintergrundbild oder GIF */
+            background-image: url('./content/cloudy3.jpg'); /* Korrekte Formatierung des Bildpfads */
             background-size: cover;
             background-position: center;
+            position: relative; /* Position relativ setzen, um den Rahmen zu überlagern */
+            z-index: -1; /* Negative z-Index, um den Rahmen hinter das 3D-Modell zu bringen */
         }
         model-viewer {
             width: 100%; /* 100% of the parent's width */
@@ -52,7 +54,6 @@
 <body>
     <h1>MyPage</h1>
     <h2>2024</h2>
-    <div class="content-frame"></div>
     <model-viewer 
         id="model-viewer"
         src="./content/ar2.glb"
@@ -66,6 +67,7 @@
         animation-name="CubeAction" 
         animation-loop>
     </model-viewer>
+    <div class="content-frame"></div> <!-- Das div-Element für den Rahmen nach dem model-viewer-Element platzieren -->
     <script>
         async function checkARCoreCompatibility() {
             const modelViewer = document.getElementById('model-viewer');
