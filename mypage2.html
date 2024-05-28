@@ -34,9 +34,11 @@
             height: 60vh;
             margin: 20px auto;
             border: 5px solid #000000;
-            background-image: url('./content/cb2d769e251150a6b2330809bd208aa8.gif.'); /* Ersetze mit dem relativen Pfad zu deinem zweiten Hintergrundbild oder GIF */
+            background-image: ./content/cb2d769e251150a6b2330809bd208aa8.gif; /* Ersetze mit dem relativen Pfad zu deinem zweiten Hintergrundbild oder GIF */
             background-size: cover;
-            background-position: center;
+    background-position: center;
+    position: relative; /* Position relativ setzen */
+    z-index: -1; /* Negative z-Index, um den Rahmen unter das 3D-Modell zu bringen */
         }
         model-viewer {
             width: 100%; /* 100% of the parent's width */
