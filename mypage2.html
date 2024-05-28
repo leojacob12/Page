@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kunsthalle AR Show!</title>
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'PrimusScript';
+            src: url('./content/primusscript.ttf') format('truetype');
+        }
+        
         body {
             background-image: url('./content/cloudy.png'); /* Ersetze mit dem relativen Pfad zu deinem Hintergrundbild */
             background-size: cover;
@@ -18,7 +22,7 @@
             text-align: center;
         }
         h1 {
-            font-family: 'Pacifico', cursive; /* Scriptartige Schriftart */
+            font-family: 'PrimusScript', cursive; /* Verwende die neue Schriftart */
             text-shadow: 2px 2px 0px #000000;
         }
         h2 {
@@ -29,7 +33,7 @@
             height: 60vh;
             margin: 20px auto;
             border: 5px solid #FFD700;
-            background-image: ./content/55K5OUB.png; /* Ersetze mit dem relativen Pfad zu deinem zweiten Hintergrundbild oder GIF */
+            background-image: ./content/cloudy3.jpg; /* Ersetze mit dem relativen Pfad zu deinem zweiten Hintergrundbild oder GIF */
             background-size: cover;
             background-position: center;
         }
