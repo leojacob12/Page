@@ -32,6 +32,7 @@
             text-align: center;
             position: relative; /* Position relativ setzen, um den Rahmen zu überlagern */
         }
+     
         h1 {
             font-family: 'PrimusScript', cursive;
             text-shadow: 4px 4px 0px #000000;
@@ -54,15 +55,7 @@
             top: 15%; /* Abstand zum oberen Rand der Seite anpassen */
             left: 30%; /* Abstand zum linken Rand der Seite anpassen */
         }
-        .content-frame {
-              background-image: url('./content/y7.gif');
-            background-size: cover;
-            background-position: center;
-            position: absolute; /* Position absolut setzen */
-            z-index: -1; /* Negative z-Index, um den Rahmen hinter das 3D-Modell zu bringen */
-            top: 15%; /* Abstand zum oberen Rand der Seite anpassen */
-            left: 10%; /* Abstand zum linken Rand der Seite anpassen */
-        }
+   
         model-viewer {
             width: 100%;
             height: calc(80vh - 20px); /* Abstand zum oberen Rand des Rahmens hinzufügen */
@@ -75,6 +68,12 @@
     </style>
 </head>
 <body>
+       <img src ="./content/y7.gif"
+           width="350px" height="230px"
+        position: relative;
+        top: 15%;
+       left: 10% 
+           />
     <h1>SEITEN AUS ANDEREN ZEITEN</h1>
     <h2>1984 - 2024</h2>
     <div class="content-frame"></div>
