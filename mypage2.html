@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/postprocessing@8.0.0/build/postprocessing.min.js"></script>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kunsthalle AR Show!</title>
@@ -84,34 +80,6 @@
                 modelViewer.removeAttribute('ar');
                 modelViewer.removeAttribute('ar-modes');
                 alert('Your device is not compatible with AR features. You can still view the 3D model.');
-
-                function applyPixelateEffect(modelViewer) {
-    const renderer = modelViewer.renderer;
-
-    // Erstelle einen neuen Pixelate-Shader
-    const pixelatePass = new POSTPROCESSING.PixelationPass();
-    pixelatePass.enabled = true;
-    pixelatePass.params.pixelSize = 10; // Pixelgröße einstellen (größerer Wert bedeutet gröbere Pixel)
-
-    // Füge den Pixelate-Effekt zur Render-Pipeline hinzu
-    const pixelateEffect = new POSTPROCESSING.EffectPass(null, pixelatePass);
-    const pixelateComposer = new POSTPROCESSING.EffectComposer(renderer);
-    pixelateComposer.addPass(new POSTPROCESSING.RenderPass(modelViewer.scene, modelViewer.camera));
-    pixelateComposer.addPass(pixelateEffect);
-
-    // Überschreibe die render-Funktion des model-viewer, um den Pixelate-Effekt anzuwenden
-    const originalRender = modelViewer.render;
-    modelViewer.render = function () {
-        pixelateComposer.render();
-        originalRender.apply(this, arguments);
-    };
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    const modelViewer = document.getElementById('model-viewer');
-    applyPixelateEffect(modelViewer);
-});
-
             }
         }
 
