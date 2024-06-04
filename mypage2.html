@@ -52,7 +52,12 @@
             position: relative;
             z-index: 1;
             top: -20px;
-            filter: contrast(1.2) brightness(0.9) grayscale(0.5); /* Apply CSS filters here */
+            filter: url(#grainy-filter); /* Apply SVG filter */
+        }
+        svg {
+            position: absolute;
+            width: 0;
+            height: 0;
         }
     </style>
 </head>
@@ -73,6 +78,17 @@
         animation-name="KeyAction"
         animation-loop>
     </model-viewer>
+    <svg>
+        <filter id="grainy-filter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" result="noise" />
+            <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="2">
+                <feDistantLight azimuth="45" elevation="60" />
+            </feDiffuseLighting>
+            <feComponentTransfer>
+                <feFuncA type="linear" slope="0.3" />
+            </feComponentTransfer>
+        </filter>
+    </svg>
     <script>
         async function checkARCoreCompatibility() {
             const modelViewer = document.getElementById('model-viewer');
