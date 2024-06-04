@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
+    
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/postprocessing@8.0.0/build/postprocessing.min.js"></script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kunsthalle AR Show!</title>
@@ -10,7 +14,7 @@
             font-family: 'PrimusScript';
             src: url('./content/primusscript.ttf') format('truetype');
         }
-
+        
         body {
             background-image: url('./content/55K5OUB.png');
             background-size: cover;
@@ -20,7 +24,7 @@
             font-family: 'Courier New', Courier, monospace;
             color: #FF0000;
             text-align: center;
-            position: relative;
+            position: relative; /* Position relativ setzen, um den Rahmen zu überlagern */
         }
         h1 {
             font-family: 'PrimusScript', cursive;
@@ -31,33 +35,27 @@
             text-shadow: 2px 2px 0px #000000;
             color: #00FF00;
         }
-        .content-frame {
-            width: 40%;
-            height: 80vh;
+    .content-frame {
+            width: 40%; /* Breite des Rahmens auf 40% ändern */
+            height: 80vh; /* Höhe des Rahmens beibehalten */
             margin: 20px auto;
             border: 5px solid #FF0000;
             background-image: url('./content/windi.gif');
             background-size: cover;
             background-position: center;
-            position: absolute;
-            z-index: -1;
-            top: 15%;
-            left: 30%;
+            position: absolute; /* Position absolut setzen */
+            z-index: -1; /* Negative z-Index, um den Rahmen hinter das 3D-Modell zu bringen */
+            top: 15%; /* Abstand zum oberen Rand der Seite anpassen */
+            left: 30%; /* Abstand zum linken Rand der Seite anpassen */
         }
         model-viewer {
             width: 100%;
-            height: calc(80vh - 20px);
+            height: calc(80vh - 20px); /* Abstand zum oberen Rand des Rahmens hinzufügen */
             display: block;
             margin: auto;
-            position: relative;
-            z-index: 1;
-            top: -20px;
-            filter: url(#grainy-filter); /* Apply SVG filter */
-        }
-        svg {
-            position: absolute;
-            width: 0;
-            height: 0;
+            position: relative; /* Position relativ setzen */
+            z-index: 1; /* Z-Index setzen, um das 3D-Modell über dem Rahmen zu positionieren */
+            top: -20px; /* Position um 20 Pixel nach oben verschieben */
         }
     </style>
 </head>
@@ -67,7 +65,7 @@
     <div class="content-frame"></div>
     <model-viewer 
         id="model-viewer"
-        src="./content/ar6.glb"
+        src="./content/ar3.glb"
         ios-src=""
         alt="Kunsthalle AR Show"
         ar
@@ -75,19 +73,9 @@
         environment-image="neutral" 
         auto-rotate
         camera-controls
+        animation-name="KeyAction"
         animation-loop>
     </model-viewer>
-    <svg>
-        <filter id="grainy-filter">
-            <feTurbulence type="fractalNoise" baseFrequency="1" numOctaves="2" result="noise" />
-            <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="2">
-                <feDistantLight azimuth="45" elevation="60" />
-            </feDiffuseLighting>
-            <feComponentTransfer>
-                <feFuncA type="linear" slope="0.3" />
-            </feComponentTransfer>
-        </filter>
-    </svg>
     <script>
         async function checkARCoreCompatibility() {
             const modelViewer = document.getElementById('model-viewer');
@@ -96,6 +84,34 @@
                 modelViewer.removeAttribute('ar');
                 modelViewer.removeAttribute('ar-modes');
                 alert('Your device is not compatible with AR features. You can still view the 3D model.');
+
+                function applyPixelateEffect(modelViewer) {
+    const renderer = modelViewer.renderer;
+
+    // Erstelle einen neuen Pixelate-Shader
+    const pixelatePass = new POSTPROCESSING.PixelationPass();
+    pixelatePass.enabled = true;
+    pixelatePass.params.pixelSize = 10; // Pixelgröße einstellen (größerer Wert bedeutet gröbere Pixel)
+
+    // Füge den Pixelate-Effekt zur Render-Pipeline hinzu
+    const pixelateEffect = new POSTPROCESSING.EffectPass(null, pixelatePass);
+    const pixelateComposer = new POSTPROCESSING.EffectComposer(renderer);
+    pixelateComposer.addPass(new POSTPROCESSING.RenderPass(modelViewer.scene, modelViewer.camera));
+    pixelateComposer.addPass(pixelateEffect);
+
+    // Überschreibe die render-Funktion des model-viewer, um den Pixelate-Effekt anzuwenden
+    const originalRender = modelViewer.render;
+    modelViewer.render = function () {
+        pixelateComposer.render();
+        originalRender.apply(this, arguments);
+    };
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const modelViewer = document.getElementById('model-viewer');
+    applyPixelateEffect(modelViewer);
+});
+
             }
         }
 
