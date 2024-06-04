@@ -75,12 +75,11 @@
         environment-image="neutral" 
         auto-rotate
         camera-controls
-        animation-name="KeyAction"
         animation-loop>
     </model-viewer>
     <svg>
         <filter id="grainy-filter">
-            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" result="noise" />
+            <feTurbulence type="fractalNoise" baseFrequency="1" numOctaves="2" result="noise" />
             <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="2">
                 <feDistantLight azimuth="45" elevation="60" />
             </feDiffuseLighting>
