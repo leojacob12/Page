@@ -5,21 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kunsthalle AR Show!</title>
 
-    <!-- ES-Shims für ältere Browser (Safari) -->
+    <!-- Support für Safari -->
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.7.1/dist/es-module-shims.js"></script>
 
-    <!-- Three.js via import-map (Version 0.172.0 wie in deiner Anleitung) -->
+    <!-- 1. Fixierte Three.js Version (0.166.0) -->
     <script type="importmap">
     {
       "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.172.0/build/three.module.min.js"
+        "three": "https://cdn.jsdelivr.net/npm/three@0.166.0/build/three.module.min.js"
       }
     }
     </script>
 
-    <!-- Module Version von model-viewer und effects addon -->
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer-module.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer-effects/dist/model-viewer-effects.min.js"></script>
+    <!-- 2. Fixierte Model-Viewer Version (3.5.0) - WICHTIG! -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer-module.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer-effects@1.5.0/dist/model-viewer-effects.min.js"></script>
 
     <style>
         @font-face {
@@ -73,18 +73,13 @@
             display: block;
             margin: 0 auto;
         }
-
-        .container {
-            position: relative;
-            z-index: 1;
-        }
     </style>
 </head>
 <body>
 
     <img src="./content/y7.gif" style="position: absolute; left: 5%; top: 200px; width: 150px; z-index: 2;"> 
   
-    <div class="container">
+    <div style="position: relative; z-index: 1;">
         <h1>SEITEN AUS ANDEREN ZEITEN</h1>
         <h2>1984 - 2024</h2>
         
