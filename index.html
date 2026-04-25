@@ -1,26 +1,20 @@
 <!DOCTYPE html>
-<html lang="de" dir="ltr">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>Kunsthalle AR Show!</title>
-
-    <!-- Support für Safari (Import Maps) -->
+    <!-- Import der notwendigen Skripte für das model-viewer-addon --> 
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.7.1/dist/es-module-shims.js"></script>
-
-    <!-- Die Brücke: Three.js (Version 0.182.0 wie in deiner Info) -->
     <script type="importmap">
     {
       "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@^0.182.0/build/three.module.min.js"
+        "three": "https://cdn.jsdelivr.net/npm/three@^0.164.1/build/three.module.min.js"
       }
     }
     </script>
-
-    <!-- Model Viewer & Effects (Module Versionen) -->
     <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer-module.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer-effects/dist/model-viewer-effects.min.js"></script>
-
     <style>
         @font-face {
             font-family: 'PrimusScript';
@@ -35,87 +29,101 @@
             padding: 0;
             font-family: 'Courier New', Courier, monospace;
             text-align: center;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            position: relative; /* Position relativ setzen, um den Rahmen zu überlagern */
         }
      
         h1 {
             font-family: 'PrimusScript', cursive;
             text-shadow: 4px 4px 0px #000000;
             color: #FF0000;
-            margin-top: 20px;
         }
-
         h2 {
             font-family: 'PrimusScript', cursive;
             text-shadow: 2px 2px 0px #000000;
             color: #00FF00;
-        }
-
-        .content-frame {
-            width: 40%;
-            height: 80vh;
+            }
+        h3 {
+            font-family: 'PrimusScript', cursive;
+            text-shadow: 2px 2px 0px #000000;
+            color: #FF0000;
+            }
+    .content-frame {
+            width: 40%; /* Breite des Rahmens auf 40% ändern */
+            height: 80vh; /* Höhe des Rahmens beibehalten */
+            margin: 20px auto;
             border: 5px solid #FF0000;
             background-image: url('./content/windi.gif');
             background-size: cover;
             background-position: center;
-            position: absolute;
-            z-index: -1;
-            top: 15%;
-            left: 30%;
+            position: absolute; /* Position absolut setzen */
+            z-index: -1; /* Negative z-Index, um den Rahmen hinter das 3D-Modell zu bringen */
+            top: 15%; /* Abstand zum oberen Rand der Seite anpassen */
+            left: 30%; /* Abstand zum linken Rand der Seite anpassen */
         }
    
         model-viewer {
-            width: 80%;
-            height: 60vh;
-            margin: 20px auto;
+
+
+            width: 100%;
+            height: calc(50vh - 20px); /* Abstand zum oberen Rand des Rahmens hinzufügen */
+            display: block;
+            margin: auto;
+            position: relative; /* Position relativ setzen */
+            z-index: 1; /* Z-Index setzen, um das 3D-Modell über dem Rahmen zu positionieren */
+            top: 40px; /* Position um 40 Pixel nach unten verschieben */
         }
     </style>
 </head>
 <body>
-    <!-- Deko-Element -->
-    <img src="./content/y7.gif" width="200" height="200" style="position: absolute; left: 60px; top: 200px;"> 
+          <img src ="./content/y7.gif"
+           width="200px" height="200px"
+        style="position: absolute; left: 60px;
+        top: 200px;"> 
   
     <h1>SEITEN AUS ANDEREN ZEITEN</h1>
     <h2>1984 - 2024</h2>
    
     <div class="content-frame"></div>
-
-    <!-- Das Modell mit dem Pixelate-Effekt -->
-   <model-viewer 
-            id="model-viewer"
-        src="content/ar.glb"
-        ios-src="content/ar.usdz"
+    <!-- Das model-viewer-Element mit dem Pixelate-Effekt -->
+    <model-viewer 
+        id="model-viewer"
+        src="./content/ar.glb"
+        ios-src="./content/ar.usdz"
         alt="Kunsthalle AR Show"
         ar
         ar-modes="webxr scene-viewer quick-look" 
         environment-image="neutral" 
         auto-rotate
-        camera-controls>
+        camera-controls
+        animation-name="all"
+        animation-loop>
         <!-- Das effect-composer-Element mit dem pixelate-effect -->
         <effect-composer>
-            <pixelate-effect></pixelate-effect>
+            <pixelate-effect granularity="3"></pixelate-effect>
         </effect-composer>
     </model-viewer>
-
-    <h2>In Erinnerung an alte Computer-Grafiken <br> & die Anfänge von CGI</h2>
-
-    <div style="position: relative; width: 100%;">
-        <img src="./content/computer.gif" width="100" height="100" style="position: absolute; right: 10px; bottom: 50px;">
-    </div>
-
+    <h2>In Erinnerung an alte
+        
+       <p>Computer-Grafiken</p> 
+        <p>& die Anfänge von CGI </p> </h2>
+      <div style="position: relative;">
+   <img src="./content/computer.gif" width="100px" height="100px" 
+       style="position: absolute; right: 10px; bottom: 250px;">
+          
+</div>
+           
     <script>
-        // Einfacher Check für AR-Kompatibilität ohne störendes Alert
-        async function checkAR() {
-            const mv = document.querySelector('#model-viewer');
-            const supported = await navigator.xr?.isSessionSupported('immersive-ar');
-            if (!supported) {
-                console.log("AR wird auf diesem Gerät nicht unterstützt.");
+        async function checkARCoreCompatibility() {
+            const modelViewer = document.getElementById('model-viewer');
+            const isARCoreSupported = await navigator.xr.isSessionSupported('immersive-ar');
+            if (!isARCoreSupported) {
+                modelViewer.removeAttribute('ar');
+                modelViewer.removeAttribute('ar-modes');
+                alert('Your device is not compatible with AR features. You can still view the 3D model.');
             }
         }
-        checkAR();
+
+        document.addEventListener('DOMContentLoaded', checkARCoreCompatibility);
     </script>
 </body>
 </html>
