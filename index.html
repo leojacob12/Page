@@ -1,20 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="de">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kunsthalle AR Show!</title>
-    <!-- Import der notwendigen Skripte für das model-viewer-addon --> 
+
+    <!-- ES-Shims für ältere Browser (Safari) -->
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.7.1/dist/es-module-shims.js"></script>
+
+    <!-- Three.js via import-map (Version 0.172.0 wie in deiner Anleitung) -->
     <script type="importmap">
     {
       "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@^0.164.1/build/three.module.min.js"
+        "three": "https://cdn.jsdelivr.net/npm/three@0.172.0/build/three.module.min.js"
       }
     }
     </script>
+
+    <!-- Module Version von model-viewer und effects addon -->
     <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer-module.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer-effects/dist/model-viewer-effects.min.js"></script>
+
     <style>
         @font-face {
             font-family: 'PrimusScript';
@@ -25,105 +31,85 @@
             background-image: url('./content/55K5OUB.png');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             margin: 0;
             padding: 0;
             font-family: 'Courier New', Courier, monospace;
             text-align: center;
-            position: relative; /* Position relativ setzen, um den Rahmen zu überlagern */
+            color: white;
+            min-height: 100vh;
         }
      
         h1 {
             font-family: 'PrimusScript', cursive;
             text-shadow: 4px 4px 0px #000000;
             color: #FF0000;
+            font-size: 3rem;
+            margin: 20px 0;
         }
+
         h2 {
             font-family: 'PrimusScript', cursive;
             text-shadow: 2px 2px 0px #000000;
             color: #00FF00;
-            }
-        h3 {
-            font-family: 'PrimusScript', cursive;
-            text-shadow: 2px 2px 0px #000000;
-            color: #FF0000;
-            }
-    .content-frame {
-            width: 40%; /* Breite des Rahmens auf 40% ändern */
-            height: 80vh; /* Höhe des Rahmens beibehalten */
-            margin: 20px auto;
+        }
+
+        .content-frame {
+            width: 50%;
+            height: 70vh;
             border: 5px solid #FF0000;
             background-image: url('./content/windi.gif');
             background-size: cover;
             background-position: center;
-            position: absolute; /* Position absolut setzen */
-            z-index: -1; /* Negative z-Index, um den Rahmen hinter das 3D-Modell zu bringen */
-            top: 15%; /* Abstand zum oberen Rand der Seite anpassen */
-            left: 30%; /* Abstand zum linken Rand der Seite anpassen */
+            position: absolute;
+            z-index: -1;
+            top: 15%;
+            left: 25%;
         }
    
         model-viewer {
-
-
             width: 100%;
-            height: calc(50vh - 20px); /* Abstand zum oberen Rand des Rahmens hinzufügen */
+            height: 65vh;
             display: block;
-            margin: auto;
-            position: relative; /* Position relativ setzen */
-            z-index: 1; /* Z-Index setzen, um das 3D-Modell über dem Rahmen zu positionieren */
-            top: 40px; /* Position um 40 Pixel nach unten verschieben */
+            margin: 0 auto;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
 <body>
-          <img src ="./content/y7.gif"
-           width="200px" height="200px"
-        style="position: absolute; left: 60px;
-        top: 200px;"> 
-  
-    <h1>SEITEN AUS ANDEREN ZEITEN</h1>
-    <h2>1984 - 2024</h2>
-   
-    <div class="content-frame"></div>
-    <!-- Das model-viewer-Element mit dem Pixelate-Effekt -->
-    <model-viewer 
-        id="model-viewer"
-        src="./content/ar.glb"
-        ios-src="./content/ar.usdz"
-        alt="Kunsthalle AR Show"
-        ar
-        ar-modes="webxr scene-viewer quick-look" 
-        environment-image="neutral" 
-        auto-rotate
-        camera-controls
-        animation-name="all"
-        animation-loop>
-        <!-- Das effect-composer-Element mit dem pixelate-effect -->
-        <effect-composer>
-            <pixelate-effect granularity="3"></pixelate-effect>
-        </effect-composer>
-    </model-viewer>
-    <h2>In Erinnerung an alte
-        
-       <p>Computer-Grafiken</p> 
-        <p>& die Anfänge von CGI </p> </h2>
-      <div style="position: relative;">
-   <img src="./content/computer.gif" width="100px" height="100px" 
-       style="position: absolute; right: 10px; bottom: 250px;">
-          
-</div>
-           
-    <script>
-        async function checkARCoreCompatibility() {
-            const modelViewer = document.getElementById('model-viewer');
-            const isARCoreSupported = await navigator.xr.isSessionSupported('immersive-ar');
-            if (!isARCoreSupported) {
-                modelViewer.removeAttribute('ar');
-                modelViewer.removeAttribute('ar-modes');
-                alert('Your device is not compatible with AR features. You can still view the 3D model.');
-            }
-        }
 
-        document.addEventListener('DOMContentLoaded', checkARCoreCompatibility);
-    </script>
+    <img src="./content/y7.gif" style="position: absolute; left: 5%; top: 200px; width: 150px; z-index: 2;"> 
+  
+    <div class="container">
+        <h1>SEITEN AUS ANDEREN ZEITEN</h1>
+        <h2>1984 - 2024</h2>
+        
+        <div class="content-frame"></div>
+
+        <model-viewer 
+            id="pixel-model"
+            src="content/ar.glb"
+            ios-src="content/ar.usdz"
+            alt="Kunsthalle AR Show"
+            ar
+            ar-modes="webxr scene-viewer quick-look" 
+            camera-controls
+            auto-rotate>
+            
+            <effect-composer>
+                <pixelate-effect granularity="3"></pixelate-effect>
+            </effect-composer>
+            
+        </model-viewer>
+
+        <h2>In Erinnerung an alte Computer-Grafiken<br> & die Anfänge von CGI</h2>
+    </div>
+
+    <img src="./content/computer.gif" style="position: absolute; right: 5%; bottom: 50px; width: 100px; z-index: 2;">
+
 </body>
 </html>
