@@ -5,20 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kunsthalle AR Show!</title>
 
-    <!-- Support für Safari -->
+    <!-- 1. Safari Support (wie in deiner Info) -->
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.7.1/dist/es-module-shims.js"></script>
 
-    <!-- Exakte Three.js Version für Post-Processing (0.166.0) -->
+    <!-- 2. Import Map mit Three.js Version 0.175.0 
+         (Das ist die höchste Version, die den Pixelate-Effekt noch unterstützt!) -->
     <script type="importmap">
     {
       "imports": {
-        "https://cdn.jsdelivr.net/npm/three@0.166.0/build/three.module.min.js"
+        "three": "https://cdn.jsdelivr.net/npm/three@0.175.0/build/three.module.min.js"
       }
     }
     </script>
 
-    <!-- Model-Viewer & Effects Loader -->
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer-module.min.js"></script>
+    <!-- 3. Model-Viewer (Version 3.5.0 passend zur Three.js Version) 
+         und das Effects Addon -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer-module.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer-effects/dist/model-viewer-effects.min.js"></script>
 
     <style>
@@ -52,7 +54,6 @@
             font-family: 'PrimusScript', cursive;
             text-shadow: 2px 2px 0px #000000;
             color: #00FF00;
-            margin: 10px 0;
         }
 
         .content-frame {
@@ -73,42 +74,20 @@
             height: 65vh;
             display: block;
             margin: 0 auto;
-            --poster-color: transparent;
-        }
-
-        .main-container {
-            position: relative;
-            z-index: 1;
-            padding-top: 20px;
-        }
-
-        .gif-left {
-            position: absolute;
-            left: 5%;
-            top: 200px;
-            width: 150px;
-            z-index: 2;
-        }
-
-        .gif-right {
-            position: absolute;
-            right: 5%;
-            bottom: 50px;
-            width: 100px;
-            z-index: 2;
         }
     </style>
 </head>
 <body>
 
-    <img src="./content/y7.gif" class="gif-left" alt="decor"> 
+    <img src="./content/y7.gif" style="position: absolute; left: 5%; top: 200px; width: 150px; z-index: 2;"> 
   
-    <div class="main-container">
+    <div style="position: relative; z-index: 1;">
         <h1>SEITEN AUS ANDEREN ZEITEN</h1>
         <h2>1984 - 2024</h2>
         
         <div class="content-frame"></div>
 
+        <!-- Der Model-Viewer mit dem Effect-Composer -->
         <model-viewer 
             id="pixel-model"
             src="content/ar.glb"
@@ -117,10 +96,8 @@
             ar
             ar-modes="webxr scene-viewer quick-look" 
             camera-controls
-            auto-rotate
-            shadow-intensity="1">
+            auto-rotate>
             
-            <!-- Hier passiert die Magie -->
             <effect-composer>
                 <pixelate-effect granularity="3"></pixelate-effect>
             </effect-composer>
@@ -130,16 +107,7 @@
         <h2>In Erinnerung an alte Computer-Grafiken<br> & die Anfänge von CGI</h2>
     </div>
 
-    <img src="./content/computer.gif" class="gif-right" alt="retro-computer">
+    <img src="./content/computer.gif" style="position: absolute; right: 5%; bottom: 50px; width: 100px; z-index: 2;">
 
-    <script>
-        // Checkt AR im Hintergrund, kein nerviges Pop-up
-        const modelViewer = document.querySelector('#pixel-model');
-        modelViewer.addEventListener('ar-status', (event) => {
-            if (event.detail.status === 'failed') {
-                console.log("AR konnte nicht gestartet werden.");
-            }
-        });
-    </script>
 </body>
 </html>
