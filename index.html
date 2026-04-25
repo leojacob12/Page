@@ -85,20 +85,18 @@
 
     <!-- Das Modell mit dem Pixelate-Effekt -->
    <model-viewer 
-        id="model-viewer"
-        src="./content/ar.glb"
-        ios-src="./content/ar.usdz"
+            id="model-viewer"
+        src="content/ar.glb"
+        ios-src="content/ar.usdz"
         alt="Kunsthalle AR Show"
         ar
         ar-modes="webxr scene-viewer quick-look" 
         environment-image="neutral" 
         auto-rotate
-        camera-controls
-        animation-name="all"
-        animation-loop>
+        camera-controls>
         <!-- Das effect-composer-Element mit dem pixelate-effect -->
         <effect-composer>
-            <pixelate-effect granularity="3"></pixelate-effect>
+            <pixelate-effect></pixelate-effect>
         </effect-composer>
     </model-viewer>
 
