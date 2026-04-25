@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="de" dir="ltr">
+<html lang="de">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kunsthalle AR Show!</title>
 
-    <!-- Support für Safari (Import Maps) -->
+    <!-- Support für Safari -->
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.7.1/dist/es-module-shims.js"></script>
 
-    <!-- Die Brücke: Three.js (Version 0.182.0 wie in deiner Info) -->
+    <!-- Exakte Three.js Version für Post-Processing (0.166.0) -->
     <script type="importmap">
     {
       "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@^0.182.0/build/three.module.min.js"
+        "three": "https://cdn.jsdelivr.net/npm/three@0.166.0/build/three.module.min.js"
       }
     }
     </script>
 
-    <!-- Model Viewer & Effects (Module Versionen) -->
+    <!-- Model-Viewer & Effects Loader -->
     <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer-module.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer-effects/dist/model-viewer-effects.min.js"></script>
 
@@ -31,32 +31,33 @@
             background-image: url('./content/55K5OUB.png');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             margin: 0;
             padding: 0;
             font-family: 'Courier New', Courier, monospace;
             text-align: center;
+            color: white;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
      
         h1 {
             font-family: 'PrimusScript', cursive;
             text-shadow: 4px 4px 0px #000000;
             color: #FF0000;
-            margin-top: 20px;
+            font-size: 3rem;
+            margin: 20px 0;
         }
 
         h2 {
             font-family: 'PrimusScript', cursive;
             text-shadow: 2px 2px 0px #000000;
             color: #00FF00;
+            margin: 10px 0;
         }
 
         .content-frame {
-            width: 40%;
-            height: 80vh;
+            width: 50%;
+            height: 70vh;
             border: 5px solid #FF0000;
             background-image: url('./content/windi.gif');
             background-size: cover;
@@ -64,59 +65,81 @@
             position: absolute;
             z-index: -1;
             top: 15%;
-            left: 30%;
+            left: 25%;
         }
    
         model-viewer {
-            width: 80%;
-            height: 60vh;
-            margin: 20px auto;
+            width: 100%;
+            height: 65vh;
+            display: block;
+            margin: 0 auto;
+            --poster-color: transparent;
+        }
+
+        .main-container {
+            position: relative;
+            z-index: 1;
+            padding-top: 20px;
+        }
+
+        .gif-left {
+            position: absolute;
+            left: 5%;
+            top: 200px;
+            width: 150px;
+            z-index: 2;
+        }
+
+        .gif-right {
+            position: absolute;
+            right: 5%;
+            bottom: 50px;
+            width: 100px;
+            z-index: 2;
         }
     </style>
 </head>
 <body>
-    <!-- Deko-Element -->
-    <img src="./content/y7.gif" width="200" height="200" style="position: absolute; left: 60px; top: 200px;"> 
+
+    <img src="./content/y7.gif" class="gif-left" alt="decor"> 
   
-    <h1>SEITEN AUS ANDEREN ZEITEN</h1>
-    <h2>1984 - 2024</h2>
-   
-    <div class="content-frame"></div>
-
-    <!-- Das Modell mit dem Pixelate-Effekt -->
-    <model-viewer 
-        id="model-viewer"
-        src="content/ar.glb"
-        ios-src="content/ar.usdz"
-        alt="Kunsthalle AR Show"
-        ar
-        ar-modes="webxr scene-viewer quick-look" 
-        environment-image="neutral" 
-        auto-rotate
-        camera-controls>
+    <div class="main-container">
+        <h1>SEITEN AUS ANDEREN ZEITEN</h1>
+        <h2>1984 - 2024</h2>
         
-        <effect-composer>
-            <pixelate-effect granularity="3"></pixelate-effect>
-        </effect-composer>
-        
-    </model-viewer>
+        <div class="content-frame"></div>
 
-    <h2>In Erinnerung an alte Computer-Grafiken <br> & die Anfänge von CGI</h2>
+        <model-viewer 
+            id="pixel-model"
+            src="content/ar.glb"
+            ios-src="content/ar.usdz"
+            alt="Kunsthalle AR Show"
+            ar
+            ar-modes="webxr scene-viewer quick-look" 
+            camera-controls
+            auto-rotate
+            shadow-intensity="1">
+            
+            <!-- Hier passiert die Magie -->
+            <effect-composer>
+                <pixelate-effect granularity="3"></pixelate-effect>
+            </effect-composer>
+            
+        </model-viewer>
 
-    <div style="position: relative; width: 100%;">
-        <img src="./content/computer.gif" width="100" height="100" style="position: absolute; right: 10px; bottom: 50px;">
+        <h2>In Erinnerung an alte Computer-Grafiken<br> & die Anfänge von CGI</h2>
     </div>
 
+    <img src="./content/computer.gif" class="gif-right" alt="retro-computer">
+
     <script>
-        // Einfacher Check für AR-Kompatibilität ohne störendes Alert
-        async function checkAR() {
-            const mv = document.querySelector('#model-viewer');
-            const supported = await navigator.xr?.isSessionSupported('immersive-ar');
-            if (!supported) {
-                console.log("AR wird auf diesem Gerät nicht unterstützt.");
+        // Checkt AR im Hintergrund, kein nerviges Pop-up
+        const modelViewer = document.querySelector('#pixel-model');
+        modelViewer.addEventListener('ar-status', (event) => {
+            if (event.detail.status === 'failed') {
+                console.log("AR konnte nicht gestartet werden.");
             }
-        }
-        checkAR();
+        });
     </script>
 </body>
 </html>
