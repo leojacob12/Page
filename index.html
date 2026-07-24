@@ -49,16 +49,24 @@
             font-family: 'PrimusScript', cursive;
             text-shadow: 4px 4px 0px #000;
             color: #FF0000;
-            font-size: 3rem;
+            font-size: clamp(1.6rem, 6vw, 3rem);
             margin: 20px 0 10px;
+            padding: 0 10px;
+            line-height: 1.2;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
 
         h2 {
             font-family: 'PrimusScript', cursive;
             text-shadow: 2px 2px 0px #000;
             color: #00FF00;
-            font-size:1.8rem;
-            margin:12px 0;
+            font-size: clamp(1.1rem, 4vw, 1.8rem);
+            margin: 12px 0;
+            padding: 0 10px;
+            line-height: 1.3;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
 
         .content-frame {
@@ -72,6 +80,17 @@
             top: 15%;
             left: 25%;
             z-index: -1;
+        }
+
+        /* Jahreszahl über dem windi.gif */
+        .year-overlay {
+            position: absolute;
+            top: 15%;
+            left: 25%;
+            width: 50%;
+            margin: 0;
+            padding: 10px 10px 0;
+            z-index: 1;
         }
 
         model-viewer {
@@ -91,13 +110,15 @@
         @media (max-width:768px){
 
             h1{
-                font-size:1.9rem;
+                font-size:clamp(1.3rem, 7vw, 1.9rem);
                 margin:10px 0 0;
+                padding: 0 8px;
             }
 
             h2{
-                font-size:1.3rem;
+                font-size:clamp(1rem, 5vw, 1.3rem);
                 margin:5px 0;
+                padding: 0 8px;
             }
 
         .content-frame{
@@ -106,6 +127,12 @@
     left:5%;
     top:150px;
 }
+
+            .year-overlay{
+                top:150px;
+                left:5%;
+                width:90%;
+            }
 
             model-viewer{
                 height:50vh;
@@ -144,9 +171,9 @@
 
         <h1>SEITEN AUS ANDEREN ZEITEN</h1>
 
-        <h2>1984 - 2024</h2>
-
         <div class="content-frame"></div>
+
+        <h2 class="year-overlay">1984 - 2024</h2>
 
         <model-viewer
             id="pixel-model"
