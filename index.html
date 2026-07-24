@@ -8,7 +8,7 @@
     <!-- Support für Safari -->
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.7.1/dist/es-module-shims.js"></script>
 
-    <!-- 1. Fixierte Three.js Version (0.166.0) -->
+    <!-- Three.js -->
     <script type="importmap">
     {
       "imports": {
@@ -17,7 +17,7 @@
     }
     </script>
 
-    <!-- 2. Fixierte Model-Viewer Version (3.5.0) - WICHTIG! -->
+    <!-- Model Viewer -->
     <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer-module.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer-effects@1.5.0/dist/model-viewer-effects.min.js"></script>
 
@@ -26,7 +26,11 @@
             font-family: 'PrimusScript';
             src: url('./content/primusscript.ttf') format('truetype');
         }
-        
+
+        *{
+            box-sizing:border-box;
+        }
+
         body {
             background-image: url('./content/55K5OUB.png');
             background-size: cover;
@@ -34,24 +38,26 @@
             background-attachment: fixed;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
             font-family: 'Courier New', Courier, monospace;
             text-align: center;
             color: white;
-            min-height: 100vh;
+            overflow-x: hidden;
         }
-     
+
         h1 {
             font-family: 'PrimusScript', cursive;
-            text-shadow: 4px 4px 0px #000000;
+            text-shadow: 4px 4px 0px #000;
             color: #FF0000;
             font-size: 3rem;
-            margin: 20px 0;
+            margin: 20px 0 10px;
         }
 
         h2 {
             font-family: 'PrimusScript', cursive;
-            text-shadow: 2px 2px 0px #000000;
+            text-shadow: 2px 2px 0px #000;
             color: #00FF00;
+            margin: 8px 0;
         }
 
         .content-frame {
@@ -62,49 +68,138 @@
             background-size: cover;
             background-position: center;
             position: absolute;
-            z-index: -1;
             top: 15%;
             left: 25%;
+            z-index: -1;
         }
-   
+
         model-viewer {
             width: 100%;
             height: 65vh;
             display: block;
             margin: 0 auto;
         }
+
+        /* Eigener AR-Button */
+        #ar-button{
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 14px 26px;
+            background: #ff0000;
+            color: white;
+            border: 3px solid white;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        /* ===========================
+           MOBILE
+           =========================== */
+
+        @media (max-width:768px){
+
+            h1{
+                font-size:1.9rem;
+                margin:10px 0 0;
+            }
+
+            h2{
+                font-size:1rem;
+                margin:5px 0;
+            }
+
+            .content-frame{
+                width:90%;
+                height:50vh;
+                left:5%;
+                top:110px;
+            }
+
+            model-viewer{
+                height:50vh;
+            }
+
+            #ar-button{
+                width:90%;
+                max-width:320px;
+                font-size:17px;
+                padding:16px;
+                bottom:12px;
+            }
+
+            /* Deko-GIFs kleiner */
+
+            .left-gif{
+                width:70px !important;
+                top:120px !important;
+                left:5px !important;
+            }
+
+            .right-gif{
+                width:60px !important;
+                right:5px !important;
+                bottom:80px !important;
+            }
+
+        }
+
     </style>
 </head>
+
 <body>
 
-    <img src="./content/y7.gif" style="position: absolute; left: 5%; top: 200px; width: 150px; z-index: 2;"> 
-  
-    <div style="position: relative; z-index: 1;">
+    <img
+        src="./content/y7.gif"
+        class="left-gif"
+        style="position:absolute;left:5%;top:200px;width:150px;z-index:2;"
+    >
+
+    <div style="position:relative;z-index:1;">
+
         <h1>SEITEN AUS ANDEREN ZEITEN</h1>
+
         <h2>1984 - 2024</h2>
-        
+
         <div class="content-frame"></div>
 
-        <model-viewer 
+        <model-viewer
             id="pixel-model"
             src="content/ar.glb"
             ios-src="content/ar.usdz"
             alt="Kunsthalle AR Show"
             ar
-            ar-modes="webxr scene-viewer quick-look" 
+            ar-modes="webxr scene-viewer quick-look"
             camera-controls
             auto-rotate>
-            
+
+            <button slot="ar-button" id="ar-button">
+                📱 AR starten
+            </button>
+
             <effect-composer>
                 <pixelate-effect granularity="3"></pixelate-effect>
             </effect-composer>
-            
+
         </model-viewer>
 
-        <h2>In Erinnerung an alte Computer-Grafiken<br> & die Anfänge von CGI</h2>
+        <h2>
+            In Erinnerung an alte Computer-Grafiken
+            <br>
+            &amp; die Anfänge von CGI
+        </h2>
+
     </div>
 
-    <img src="./content/computer.gif" style="position: absolute; right: 5%; bottom: 50px; width: 100px; z-index: 2;">
+    <img
+        src="./content/computer.gif"
+        class="right-gif"
+        style="position:absolute;right:5%;bottom:50px;width:100px;z-index:2;"
+    >
 
 </body>
 </html>
